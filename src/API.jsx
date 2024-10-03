@@ -3,9 +3,10 @@ const baseURL = "https://boolean-uk-api-server.fly.dev/"
 const githubUsername = "maaxolofsson/"
 
 export async function get(endpoint) {
-    const res = await fetch(baseURL + githubUsername + endpoint);
-    const data = await res.json();
-    return data
+    console.log("GET: " + baseURL + githubUsername + endpoint)
+    const httpRes = await fetch(baseURL + githubUsername + endpoint);
+    const data = await httpRes.json();
+    return { httpRes, data }
 }
 
 export async function deleteOne(endpoint) { // Endpoint should include ID, e.g. /contact/10

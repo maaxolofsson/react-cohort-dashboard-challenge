@@ -2,8 +2,16 @@ import "../../../../../../../../assets/css/Post.css"
 import "../../../../../../icons/InitialsProfileIcon"
 import InitialsProfileIcon from "../../../../../../icons/InitialsProfileIcon";
 import CommentList from "./components/CommentList"
+import { useContext, useEffect, useState } from "react";
+import * as API from "../../../../../../../../API"
 
-function Post() {
+function Post({ post }) {
+    const [comments, setComments] = useState([])
+
+    useEffect(() => async function () {
+        setComments((await API.get("post/" + post.id + "/comment")).data);
+    }, [])
+
     return (
         <div className="Post-main">
             <div className="Post-container">
@@ -11,14 +19,12 @@ function Post() {
                     <InitialsProfileIcon color="lightblue" initials="MO"></InitialsProfileIcon>
                     <div className="Post-author-title">
                         <h3>Max Olofsson</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                        <p>{post.title}</p>
                     </div>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Veritatis provident unde porro maiores quisquam? Dolorum numquam quia ipsa minima possimus iusto exercitationem,
-                    acere aperiam accusantium libero perferendis! Cum, nulla architecto!</p>
+                <p>{post.content}</p>
                 <hr />
-                <CommentList></CommentList>
+                <CommentList comments={comments}></CommentList>
             </div>
         </div>
     )
