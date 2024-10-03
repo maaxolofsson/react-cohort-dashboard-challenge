@@ -39,7 +39,7 @@ export async function put(endpoint, newData) { // data = obj (json)
         },
         body: JSON.stringify(newData)
     }
-    const httpRes = await fetch(baseURL + githubUsername + endpointd, c);
+    const httpRes = await fetch(baseURL + githubUsername + endpoint, c);
     const resData = await httpRes.json()
     return { httpRes, resData };
 }

@@ -1,0 +1,32 @@
+.CreatePost-main{
+    background-color: white;
+    margin: 30px;
+    border-radius: 7px;
+}
+
+.CreatePost-container{
+    width: 100%;
+    display: flex;
+    padding: 10px;
+}
+
+.CreatePost-container *{
+    margin: 10px;
+}
+
+.CreatePost-container input[type=text]{
+    border-radius: 7px;
+    width: 65%;
+    padding: 10px;
+    padding-left: 20px;
+    font-size: 20px;
+}
+
+.CreatePost-container input[type=submit]{
+    width: 19%;
+    border-radius: 7px;
+    border: none;
+    background-color: #000046;
+    color: #fff !important;
+    font-size: 20px;
+}
