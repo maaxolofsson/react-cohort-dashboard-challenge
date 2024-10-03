@@ -1,6 +1,7 @@
 import "../../../../../../../../assets/css/Post.css"
 import "../../../../../../icons/InitialsProfileIcon"
 import InitialsProfileIcon from "../../../../../../icons/InitialsProfileIcon";
+import CommentList from "./components/CommentList"
 
 function Post() {
     return (
@@ -17,6 +18,7 @@ function Post() {
                     Veritatis provident unde porro maiores quisquam? Dolorum numquam quia ipsa minima possimus iusto exercitationem,
                     acere aperiam accusantium libero perferendis! Cum, nulla architecto!</p>
                 <hr />
+                <CommentList></CommentList>
             </div>
         </div>
     )
