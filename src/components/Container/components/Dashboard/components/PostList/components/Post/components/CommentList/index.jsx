@@ -11,7 +11,7 @@ function CommentList({ postId }) {
 
     useEffect(() => async function () {
         setComments((await API.get("post/" + postId + "/comment")).data.toReversed());
-      }, [])
+    }, [])
 
     /*
     obj = {
@@ -34,7 +34,7 @@ function CommentList({ postId }) {
                 console.log("401 username provided not part of boolean org")
                 break;
             default:
-                console.log("Unknown status code received in addPost.")
+                console.log("Unknown status code received in addComment.")
         }
         console.log(response)
         return response
@@ -45,7 +45,10 @@ function CommentList({ postId }) {
         switch (response.httpRes.status) {
             case 200:
                 console.log("200 ok")
-                return response.data
+                break;
+            case 400:
+                console.log("400 bad request")
+                break;
             case 401:
                 console.log("401 username provided not part of boolean org")
                 break;
@@ -53,6 +56,7 @@ function CommentList({ postId }) {
                 console.log("Unknown status code received in getAllComments.")
         }
         console.log(response)
+        return response.data
     }
 
     return (

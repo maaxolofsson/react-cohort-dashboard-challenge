@@ -23,7 +23,7 @@ function PostComment({ postId }) {
     }, [loggedInContact.firstName, loggedInContact.lastName])
 
     const handleSubmit = async () => {
-        if (commentCrud === "") return;
+        if (commentData === "") return;
         const dataToSend = {
             "postId": postId,
             "content": commentData,
