@@ -26,7 +26,7 @@ function CreatePost() {
         console.log(loggedInContact)
         if (commentData === "") return;
         const postData = {
-            "title": "", // TODO: what should this be
+            "title": "No title.", // TODO: what should this be
             "content": commentData,
             "contactId": loggedInContact.id
         }

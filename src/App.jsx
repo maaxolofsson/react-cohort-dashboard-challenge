@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Container from './components/Container';
 import * as API from "./API"
 import { createContext, useEffect, useState } from 'react';
+import PostPage from './components/Container/components/Dashboard/components/PostList/components/PostPage';
 
 const PostCrudContext = createContext()
 const LoggedInContactContext = createContext()
@@ -65,6 +66,7 @@ function App() {
       <PostCrudContext.Provider value={{ posts, getOnePost, addPost }}>
         <Routes>
           <Route path="/" element={<Container />}></Route>
+          <Route path="/post/:id" element={<PostPage posts={posts} />}></Route>
         </Routes>
       </PostCrudContext.Provider>
     </LoggedInContactContext.Provider>

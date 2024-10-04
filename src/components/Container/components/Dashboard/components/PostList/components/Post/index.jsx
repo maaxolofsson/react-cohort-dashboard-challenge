@@ -4,6 +4,7 @@ import InitialsProfileIcon from "../../../../../../icons/InitialsProfileIcon";
 import { CommentList } from "./components/CommentList"
 import { useEffect, useState } from "react";
 import * as API from "../../../../../../../../API"
+import { BrowserRouter, Link, Routes } from "react-router-dom";
 
 function Post({ post }) {
     // States
@@ -30,7 +31,7 @@ function Post({ post }) {
 
                     <div className="Post-author-title">
                         <h3>{postedByContact.firstName} {postedByContact.lastName}</h3>
-                        <p>{post.title}</p>
+                        <Link to={'/post/' + post.id}>{post.title}</Link>
                     </div>
                 </div>
                 <p>{post.content}</p>

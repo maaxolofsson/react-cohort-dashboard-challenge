@@ -8,9 +8,10 @@ const CommentCrudContext = createContext()
 
 function CommentList({ postId }) {
     const [comments, setComments] = useState([])
+    const [listLimit, setListLimit] = useState(3)
 
     useEffect(() => async function () {
-        setComments((await API.get("post/" + postId + "/comment")).data.toReversed());
+        setComments((await API.get("post/" + postId + "/comment")).data);
     }, [])
 
     /*
@@ -21,11 +22,13 @@ function CommentList({ postId }) {
     }
   */
     const addComment = async (postId, obj) => {
+        console.log("Adding comment: ")
+        console.log(obj)
         const response = await API.post("post/" + postId + "/comment", obj)
         switch (response.httpRes.status) {
             case 201:
                 console.log("201 created")
-                setComments(await getAllComments(postId));
+                setComments((await API.get("post/" + postId + "/comment")).data);
                 break;
             case 400:
                 console.log("400 bad request")
