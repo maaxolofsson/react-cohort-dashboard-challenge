@@ -3,7 +3,6 @@ const baseURL = "https://boolean-uk-api-server.fly.dev/"
 const githubUsername = "maaxolofsson/"
 
 export async function get(endpoint) {
-    console.log("GET: " + baseURL + githubUsername + endpoint)
     const httpRes = await fetch(baseURL + githubUsername + endpoint);
     const data = await httpRes.json();
     return { httpRes, data }

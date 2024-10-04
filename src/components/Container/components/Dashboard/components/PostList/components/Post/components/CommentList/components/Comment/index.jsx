@@ -5,20 +5,26 @@ import * as API from "../../../../../../../../../../../../API"
 import { useEffect, useState } from "react";
 
 function Comment({ comment }) {
-    const [contact, setContact] = useState()
+    const [contact, setContact] = useState({})
+    const [initials, setInitials] = useState("")
 
     useEffect(() => async function () {
-        console.log("HEJHJEHJEHJJH")
-    })
+        const contactFromApi = (await API.get("contact/" + comment.contactId)).data
+        setInitials(contactFromApi.firstName.charAt(0) + contactFromApi.lastName.charAt(0))
+        setContact(contactFromApi)
+    }, [])
 
     return (
         <div className="Comment-main">
             <div>
-                <InitialsProfileIcon color={"lightblue"} initials={"MO"}></InitialsProfileIcon>
+                <InitialsProfileIcon
+                    color={contact.favouriteColour}
+                    initials={initials}
+                />
             </div>
 
             <div className="Comment-author-text-container">
-                <h4>{comment.contactId}, {contact.firstName} {contact.lastName}</h4>
+                <h4>{contact.firstName} {contact.lastName}</h4>
                 <p>{comment.content}</p>
             </div>
         </div>

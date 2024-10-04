@@ -5,12 +5,15 @@ import { createContext, useEffect, useState } from 'react';
 
 const PostCrudContext = createContext()
 const CommentCrudContext = createContext()
+const LoggedInContactContext = createContext()
 
 function App() {
   const [posts, setPosts] = useState([])
+  const [loggedInContact, setLoggedInContact] = useState({})
 
   useEffect(() => async function () {
-    setPosts((await API.get("post")).data);
+    setPosts((await API.get("post")).data.toReversed());
+    setLoggedInContact((await API.get("contact/5")).data) // Hard coded logged in user for now..
   }, [])
 
   const getOnePost = async (id) => {
@@ -44,7 +47,7 @@ function App() {
     switch (response.httpRes.status) {
       case 201:
         console.log("201 created")
-        setPosts((await API.get("post")).data);
+        setPosts((await API.get("post")).data.toReversed());
         break;
       case 400:
         console.log("400 bad request")
@@ -74,14 +77,16 @@ function App() {
   }
 
   return (
-    <CommentCrudContext.Provider value={{ getAllComments }}>
-      <PostCrudContext.Provider value={{ posts, getOnePost, addPost }}>
-        <Routes>
-          <Route path="/" element={<Container />}></Route>
-        </Routes>
-      </PostCrudContext.Provider>
-    </CommentCrudContext.Provider>
+    <LoggedInContactContext.Provider value={{ loggedInContact }}>
+      <CommentCrudContext.Provider value={{ getAllComments }}>
+        <PostCrudContext.Provider value={{ posts, getOnePost, addPost }}>
+          <Routes>
+            <Route path="/" element={<Container />}></Route>
+          </Routes>
+        </PostCrudContext.Provider>
+      </CommentCrudContext.Provider>
+    </LoggedInContactContext.Provider>
   )
 }
 
-export { App, PostCrudContext, CommentCrudContext }
+export { App, PostCrudContext, CommentCrudContext, LoggedInContactContext }

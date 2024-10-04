@@ -2,23 +2,34 @@ import "../../../../../../../../assets/css/Post.css"
 import "../../../../../../icons/InitialsProfileIcon"
 import InitialsProfileIcon from "../../../../../../icons/InitialsProfileIcon";
 import CommentList from "./components/CommentList"
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as API from "../../../../../../../../API"
 
 function Post({ post }) {
+    // States
     const [comments, setComments] = useState([])
+    const [postedByContact, setPostedByContact] = useState({})
+    const [initials, setInitials] = useState("")
 
     useEffect(() => async function () {
         setComments((await API.get("post/" + post.id + "/comment")).data);
+        const contactFromApi = (await API.get("contact/" + post.contactId)).data
+        setInitials(contactFromApi.firstName.charAt(0) + contactFromApi.lastName.charAt(0))
+        setPostedByContact(contactFromApi)
     }, [])
 
     return (
         <div className="Post-main">
             <div className="Post-container">
                 <div className="Post-image-author-title-container">
-                    <InitialsProfileIcon color="lightblue" initials="MO"></InitialsProfileIcon>
+
+                    <InitialsProfileIcon
+                        color={postedByContact.favouriteColour}
+                        initials={initials}>
+                    </InitialsProfileIcon>
+
                     <div className="Post-author-title">
-                        <h3>Max Olofsson</h3>
+                        <h3>{postedByContact.firstName} {postedByContact.lastName}</h3>
                         <p>{post.title}</p>
                     </div>
                 </div>
