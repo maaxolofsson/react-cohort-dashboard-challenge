@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Container from './components/container';
+import Container from './components/Container';
 import * as API from "./API"
 import { createContext, useEffect, useState } from 'react';
 
