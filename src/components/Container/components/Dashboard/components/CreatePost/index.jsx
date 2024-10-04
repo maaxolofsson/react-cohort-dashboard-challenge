@@ -18,11 +18,12 @@ function CreatePost() {
     useEffect(() => {
         const firstName = loggedInContact.firstName
         const lastName = loggedInContact.lastName
-        setInitials(firstName.charAt(0) + lastName.charAt(0))
+        //setInitials(firstName.charAt(0) + lastName.charAt(0))
     }, [loggedInContact.firstName, loggedInContact.lastName])
 
     // Functions
     const handleSubmit = async () => {
+        console.log(loggedInContact)
         if (commentData === "") return;
         const postData = {
             "title": "", // TODO: what should this be
@@ -35,7 +36,7 @@ function CreatePost() {
     return (
         <div className="CreatePost-main">
             <div className="CreatePost-container">
-                <InitialsProfileIcon color={"lightgreen"} initials={"MO"} />
+                <InitialsProfileIcon color={loggedInContact.favouriteColour} initials={"MO"} />
                 <input
                     type="text"
                     placeholder="What's on your mind?"
