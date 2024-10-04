@@ -11,7 +11,7 @@ function CommentList({ postId }) {
     const [listLimit, setListLimit] = useState(3)
 
     useEffect(() => async function () {
-        setComments((await API.get("post/" + postId + "/comment")).data);
+        setComments((await API.get("post/" + postId + "/comment")).data.reverse());
     }, [])
 
     /*
@@ -22,13 +22,12 @@ function CommentList({ postId }) {
     }
   */
     const addComment = async (postId, obj) => {
-        console.log("Adding comment: ")
-        console.log(obj)
         const response = await API.post("post/" + postId + "/comment", obj)
         switch (response.httpRes.status) {
             case 201:
                 console.log("201 created")
-                setComments((await API.get("post/" + postId + "/comment")).data);
+                setComments((await API.get("post/" + postId + "/comment")).data.reverse());
+                console.log(comments)
                 break;
             case 400:
                 console.log("400 bad request")
@@ -62,12 +61,17 @@ function CommentList({ postId }) {
         return response.data
     }
 
+    const handleLimit = () => {
+        setListLimit(comments.length)
+    }
+
     return (
         <>
             <CommentCrudContext.Provider value={{ getAllComments, addComment }}>
                 <div className="CommentList-main">
+                    {comments.length > 3 ? <p onClick={handleLimit}>Show previous comments</p> : null}
                     {
-                        comments.map((comment, ix) => (
+                        comments.slice(0, listLimit).reverse().map((comment, ix) => (
                             <Comment key={ix} comment={comment} />
                         ))
                     }

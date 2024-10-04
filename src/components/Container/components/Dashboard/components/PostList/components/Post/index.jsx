@@ -4,7 +4,7 @@ import InitialsProfileIcon from "../../../../../../icons/InitialsProfileIcon";
 import { CommentList } from "./components/CommentList"
 import { useEffect, useState } from "react";
 import * as API from "../../../../../../../../API"
-import { BrowserRouter, Link, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Post({ post }) {
     // States
