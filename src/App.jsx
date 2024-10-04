@@ -4,16 +4,15 @@ import * as API from "./API"
 import { createContext, useEffect, useState } from 'react';
 
 const PostCrudContext = createContext()
-const CommentCrudContext = createContext()
 const LoggedInContactContext = createContext()
 
 function App() {
   const [posts, setPosts] = useState([])
-  const [loggedInContact, setLoggedInContact] = useState({})
+  const [loggedInContact, setLoggedInContact] = useState({ firstName: "", lastName: "" })
 
   useEffect(() => async function () {
     setPosts((await API.get("post")).data.toReversed());
-    setLoggedInContact((await API.get("contact/5")).data) // Hard coded logged in user for now..
+    setLoggedInContact((await API.get("contact/1")).data) // Hard coded logged in user for now..
   }, [])
 
   const getOnePost = async (id) => {
@@ -61,32 +60,15 @@ function App() {
     console.log(response)
   }
 
-  const getAllComments = async (postId) => {
-    const response = await API.get("post/" + postId + "/comment")
-    switch (response.httpRes.status) {
-      case 200:
-        console.log("200 ok")
-        return response.data
-      case 401:
-        console.log("401 username provided not part of boolean org")
-        break;
-      default:
-        console.log("Unknown status code received in getAllComments.")
-    }
-    console.log(response)
-  }
-
   return (
     <LoggedInContactContext.Provider value={{ loggedInContact }}>
-      <CommentCrudContext.Provider value={{ getAllComments }}>
-        <PostCrudContext.Provider value={{ posts, getOnePost, addPost }}>
-          <Routes>
-            <Route path="/" element={<Container />}></Route>
-          </Routes>
-        </PostCrudContext.Provider>
-      </CommentCrudContext.Provider>
+      <PostCrudContext.Provider value={{ posts, getOnePost, addPost }}>
+        <Routes>
+          <Route path="/" element={<Container />}></Route>
+        </Routes>
+      </PostCrudContext.Provider>
     </LoggedInContactContext.Provider>
   )
 }
 
-export { App, PostCrudContext, CommentCrudContext, LoggedInContactContext }
+export { App, PostCrudContext, LoggedInContactContext }

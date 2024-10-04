@@ -1,7 +1,7 @@
 import "../../../../../../../../assets/css/Post.css"
 import "../../../../../../icons/InitialsProfileIcon"
 import InitialsProfileIcon from "../../../../../../icons/InitialsProfileIcon";
-import CommentList from "./components/CommentList"
+import { CommentList } from "./components/CommentList"
 import { useEffect, useState } from "react";
 import * as API from "../../../../../../../../API"
 
@@ -35,7 +35,7 @@ function Post({ post }) {
                 </div>
                 <p>{post.content}</p>
                 <hr />
-                <CommentList comments={comments}></CommentList>
+                <CommentList comments={comments} postId={post.id}></CommentList>
             </div>
         </div>
     )

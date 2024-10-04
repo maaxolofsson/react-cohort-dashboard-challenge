@@ -18,7 +18,7 @@ function CreatePost() {
     useEffect(() => {
         const firstName = loggedInContact.firstName
         const lastName = loggedInContact.lastName
-        //setInitials(firstName.charAt(0) + lastName.charAt(0))
+        setInitials(firstName.charAt(0) + lastName.charAt(0))
     }, [loggedInContact.firstName, loggedInContact.lastName])
 
     // Functions
@@ -36,7 +36,7 @@ function CreatePost() {
     return (
         <div className="CreatePost-main">
             <div className="CreatePost-container">
-                <InitialsProfileIcon color={loggedInContact.favouriteColour} initials={"MO"} />
+                <InitialsProfileIcon color={loggedInContact.favouriteColour} initials={initials} />
                 <input
                     type="text"
                     placeholder="What's on your mind?"
