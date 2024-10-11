@@ -23,31 +23,30 @@ function CreatePost() {
 
     // Functions
     const handleSubmit = async () => {
-        console.log(loggedInContact)
-        if (commentData === "") return;
-        const postData = {
-            "title": "No title.", // TODO: what should this be
-            "content": commentData,
-            "contactId": loggedInContact.id
-        }
-        console.log(await addPost(postData))
+	    if (commentData === "") return;
+	    const postData = {
+		    "title": "No title.", // TODO: what should this be
+		    "content": commentData,
+		    "contactId": loggedInContact.id
+	    }
+	    console.log(await addPost(postData))
     }
 
-    return (
-        <div className="CreatePost-main">
-            <div className="CreatePost-container">
-                <InitialsProfileIcon color={loggedInContact.favouriteColour} initials={initials} />
-                <input
-                    type="text"
-                    placeholder="What's on your mind?"
-                    value={commentData}
-                    onChange={(e) => setCommentData(e.target.value)}
-                />
+	return (
+		<div className="CreatePost-main">
+		<div className="CreatePost-container">
+		<InitialsProfileIcon color={loggedInContact.favouriteColour} initials={initials} />
+		<input
+		type="text"
+		placeholder="What's on your mind?"
+		value={commentData}
+		onChange={(e) => setCommentData(e.target.value)}
+		/>
 
-                <input type="submit" value="Post" onClick={handleSubmit} />
-            </div>
-        </div>
-    )
+		<input type="submit" value="Post" onClick={handleSubmit} />
+		</div>
+		</div>
+	)
 }
 
 export default CreatePost;

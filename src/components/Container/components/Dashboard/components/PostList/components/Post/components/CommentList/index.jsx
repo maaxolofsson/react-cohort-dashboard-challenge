@@ -7,11 +7,13 @@ import { createContext, useEffect, useState } from "react"
 const CommentCrudContext = createContext()
 
 function CommentList({ postId }) {
-    const [comments, setComments] = useState([])
-    const [listLimit, setListLimit] = useState(3)
+    const [comments, setComments] = useState({
+        comments: [],
+        showLimit: -1
+    })
 
     useEffect(() => async function () {
-        setComments((await API.get("post/" + postId + "/comment")).data.reverse());
+        setComments({ comments: (await API.get("post/" + postId + "/comment")).data.reverse(), showLimit: 3 });
     }, [])
 
     /*
@@ -26,7 +28,10 @@ function CommentList({ postId }) {
         switch (response.httpRes.status) {
             case 201:
                 console.log("201 created")
-                setComments((await API.get("post/" + postId + "/comment")).data.reverse());
+                setComments({
+                    comments: (await API.get("post/" + postId + "/comment")).data,
+                    showLimit: comments.showLimit
+                });
                 console.log(comments)
                 break;
             case 400:
@@ -62,19 +67,19 @@ function CommentList({ postId }) {
     }
 
     const handleLimit = () => {
-        setListLimit(comments.length)
+        setComments({ comments: comments.comments, showLimit: comments.comments.length })
     }
+
+    const commentsToShow = comments.comments.slice(0, comments.showLimit).map((comment, ix) => (
+        <Comment key={ix} comment={comment} />
+    )) 
 
     return (
         <>
             <CommentCrudContext.Provider value={{ getAllComments, addComment }}>
                 <div className="CommentList-main">
-                    {comments.length > 3 ? <p onClick={handleLimit}>Show previous comments</p> : null}
-                    {
-                        comments.slice(0, listLimit).reverse().map((comment, ix) => (
-                            <Comment key={ix} comment={comment} />
-                        ))
-                    }
+                    {comments.comments.length > 3 ? <p onClick={handleLimit}>Show more comments</p> : null}
+                    {commentsToShow.length ? commentsToShow : "Loading comments..."}
                 </div>
                 <PostComment postId={postId} />
             </CommentCrudContext.Provider>

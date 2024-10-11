@@ -23,7 +23,6 @@ function Post({ post }) {
         <div className="Post-main">
             <div className="Post-container">
                 <div className="Post-image-author-title-container">
-
                     <InitialsProfileIcon
                         color={postedByContact.favouriteColour}
                         initials={initials}>

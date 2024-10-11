@@ -3,6 +3,7 @@ import Container from './components/Container';
 import * as API from "./API"
 import { createContext, useEffect, useState } from 'react';
 import PostPage from './components/Container/components/Dashboard/components/PostList/components/PostPage';
+import Profile from './components/Container/components/Profile';
 
 const PostCrudContext = createContext()
 const LoggedInContactContext = createContext()
@@ -10,8 +11,10 @@ const LoggedInContactContext = createContext()
 function App() {
   const [posts, setPosts] = useState([])
   const [loggedInContact, setLoggedInContact] = useState({ firstName: "", lastName: "" })
+  const [contacts, setContacts] = useState([])
 
   useEffect(() => async function () {
+    setContacts((await API.get("contact")).data);
     setPosts((await API.get("post")).data.toReversed());
     setLoggedInContact((await API.get("contact/1")).data) // Hard coded logged in user for now..
   }, [])
@@ -67,9 +70,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Container />}></Route>
           <Route path="/post/:id" element={<PostPage posts={posts} />}></Route>
+          <Route path="/profile/:id" element={<Profile contact={contacts} />}></Route>
         </Routes>
       </PostCrudContext.Provider>
-    </LoggedInContactContext.Provider>
+    </LoggedInContactContext.Provider >
   )
 }
 
